@@ -102,8 +102,7 @@ var controller = {
         var last = req.params.last;
         
         if (last || last != undefined){
-            query.limit(2);
-            
+            query.limit(2); 
         }
         
         
@@ -141,20 +140,25 @@ var controller = {
         // recorrer id de la url
         var articleId = req.params.id;
         
-        
+        console.log("Id en backend " + articleId);
         //comprobar que existe
         if(!articleId || articleId == null){
+
+            console.log("Error en backend o se encontro articulo");
             return res.status(404).send({
                 status : 'error',
-                message : 'No se encontraro el articulo'
+                message : 'No se encontraro el articulo',
+                
+                
             });
             
-        }
+       }
         //buscar articulo
         
         Article.findById(articleId, (err, article) => {
             
             if(err ||!article){
+                console.log("Error no se encontro articulo en backend");
                 return res.status(404).send({
                     status : 'error',
                     message : 'No existe el articulo'
@@ -163,11 +167,12 @@ var controller = {
                 
             }
             
-            return res.status(404).send({
+           
+            return res.status(200).send({
                 status : 'success',
                 article
             });
-            
+            console.log("Se encontro en backend");
             
         })
         //devolver en json
