@@ -74,9 +74,8 @@ var controller = {
                 }
                 
                 //devolver respuesta
-                
                 return res.status(200).send({
-                    message: 'Success',
+                    status: 'success',
                     article : articleStored
                 });
                 
@@ -102,7 +101,7 @@ var controller = {
         var last = req.params.last;
         
         if (last || last != undefined){
-            query.limit(2); 
+            query.limit(4); 
         }
         
         
@@ -138,13 +137,11 @@ var controller = {
     getArticle : (req, res) =>{
         
         // recorrer id de la url
-        var articleId = req.params.id;
+        var articleId = req.params.id
         
-        console.log("Id en backend " + articleId);
         //comprobar que existe
         if(!articleId || articleId == null){
 
-            console.log("Error en backend o se encontro articulo");
             return res.status(404).send({
                 status : 'error',
                 message : 'No se encontraro el articulo',
@@ -158,7 +155,6 @@ var controller = {
         Article.findById(articleId, (err, article) => {
             
             if(err ||!article){
-                console.log("Error no se encontro articulo en backend");
                 return res.status(404).send({
                     status : 'error',
                     message : 'No existe el articulo'
@@ -172,7 +168,6 @@ var controller = {
                 status : 'success',
                 article
             });
-            console.log("Se encontro en backend");
             
         })
         //devolver en json
