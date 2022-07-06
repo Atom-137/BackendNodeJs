@@ -307,28 +307,35 @@ var controller = {
             //Si todo es valido 
             //sacando id de la url
             var articleId = req.params.id;
-            Article.findOneAndUpdate({_id:articleId},{image: file_name}, {new: true},(err,articleUpdated) =>{
-                //buscar el articulo, asignarle el nombre de la imagen y actualizar
-                if(err || !articleUpdated){
-                    
+
+            if(articleId){
+                Article.findOneAndUpdate({_id:articleId},{image: file_name}, {new: true},(err,articleUpdated) =>{
+                    //buscar el articulo, asignarle el nombre de la imagen y actualizar
+                    if(err || !articleUpdated){
+                        
+                        return res.status(200).send({
+                            status : 'error',
+                            message : 'Error al guardar la imagen de articulo'
+                            
+                        });
+                        
+                    }
                     return res.status(200).send({
-                        status : 'error',
-                        message : 'Error al guardar la imagen de articulo'
+                        status : 'success',
+                        article : articleUpdated
                         
                     });
-                    
-                }
-                
-                
+
+                });
+
+            }else{
                 return res.status(200).send({
                     status : 'success',
-                    article : articleUpdated
-                    
+                    image : file_name            
                 });
                 
-            });
-            
-            
+            }
+
         }
         
         
