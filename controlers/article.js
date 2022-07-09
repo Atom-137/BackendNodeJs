@@ -60,7 +60,13 @@ var controller = {
             //asignar valores
             article.title = params.title;
             article.content = params.content;
-            article.image = null;
+            if(params.image){
+
+                article.image = params.image;
+            }else{
+                article.image = null;
+            }
+          
             
             //guardar el articulo
             article.save((err, articleStored) =>{
@@ -107,7 +113,7 @@ var controller = {
         
         
         //find
-        query.sort('=_id').exec((err,articles)=>{
+        query.sort('-date').exec((err,articles)=>{
             
             if(err){
                 return res.status(500).send({
@@ -124,7 +130,7 @@ var controller = {
                 });
             }
             return res.status(200).send({
-                status : 'access',
+                status : 'success',
                 articles
             });
             
